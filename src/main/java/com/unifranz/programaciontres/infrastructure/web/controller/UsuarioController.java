@@ -31,9 +31,4 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.listarActivos());
     }
 
-    @PostMapping("/guardarAdmin")
-    public ResponseEntity<UsuarioDto> guardarAdmin (@RequestBody UsuarioDto usuarioDto){
-        UsuarioDto usuario = usuarioService.guardarAdmin(usuarioDto);
-        return ResponseEntity.ok(usuario);
-    }
 }
