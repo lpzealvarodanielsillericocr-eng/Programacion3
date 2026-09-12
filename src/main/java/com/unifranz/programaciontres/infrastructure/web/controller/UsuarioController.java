@@ -30,11 +30,23 @@ public class UsuarioController {
     public ResponseEntity<List<UsuarioDto>> listarUsuariosActivos(){
         return ResponseEntity.ok(usuarioService.listarActivos());
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<UsuarioDto> editar(
+            @PathVariable Long id,
+            @RequestBody UsuarioDto usuarioDto) {
 
-    @PutMapping ("/{id}")
-    public ResponseEntity<UsuarioDto> editar(@PathVariable long id, @RequestBody UsuarioDto usuarioDto) {
-        UsuarioDto usuarioActualizado = usuarioService.editar(id, usuarioDto);
-        return ResponseEntity.ok(usuarioActualizado);
+        return ResponseEntity.ok(usuarioService.editar(id, usuarioDto));
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarLogico(@PathVariable Long id) {
+        usuarioService.eliminarLogico(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}/fisico")
+    public ResponseEntity<Void> eliminarFisico(@PathVariable Long id) {
+        usuarioService.eliminarFisico(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
