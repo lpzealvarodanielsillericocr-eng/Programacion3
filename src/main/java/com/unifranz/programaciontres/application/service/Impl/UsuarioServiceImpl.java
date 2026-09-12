@@ -39,6 +39,23 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public void eliminarLogico(Long id){
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + id));
+
+        usuario.setEliminado(true);
+        usuarioRepository.save(usuario);
+    }
+
+    @Override
+    public void eliminarFisico(Long id){
+        if (!usuarioRepository.existsById(id)){
+            throw new RuntimeException("Usuario no encontrado: " + id);
+        }
+        usuarioRepository.deleteById(id);
+    }
+
+    @Override
     public List<UsuarioDto> listar() {
         return usuarioRepository.findAll()
                 .stream()

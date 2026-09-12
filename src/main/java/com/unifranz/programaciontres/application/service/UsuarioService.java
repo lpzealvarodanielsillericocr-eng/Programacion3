@@ -11,4 +11,7 @@ public interface UsuarioService {
     List<UsuarioDto> listar();
 
     List<UsuarioDto> listarActivos();
+
+    void eliminarLogico(Long id);
+    void eliminarFisico(Long id);
 }
