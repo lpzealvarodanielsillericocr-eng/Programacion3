@@ -31,4 +31,16 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.listarActivos());
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarLogico(@PathVariable Long id) {
+        usuarioService.eliminarLogico(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}/fisico")
+    public ResponseEntity<Void> eliminarFisico(@PathVariable Long id) {
+        usuarioService.eliminarFisico(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
