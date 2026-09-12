@@ -8,6 +8,9 @@ import com.unifranz.programaciontres.infrastructure.persistence.UsuarioRepositor
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,5 +52,19 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public List<UsuarioDto> listarActivos() {
         return usuarioRepository.listarActivos();
+    }
+
+    @Override 
+    public UsuarioDto editar(long id, UsuarioDto usuarioDto) {
+        Usuario usuarioExistente = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe un usuario con ese Id" + id));
+
+        if (Boolean.TRUE.equals(usuarioDto.getEliminado())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se puede editar un usuario eliminado");
+        } 
+        usuarioExistente.setNombre(usuarioDto.getNombre());
+        usuarioExistente.setEmail(usuarioDto.getEmail());
+        Usuario usuarioActualizado = usuarioRepository.save(usuarioExistente);
+        return new UsuarioDto(usuarioActualizado);
     }
 }
